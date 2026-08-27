@@ -1091,7 +1091,7 @@ At the highest level, the entire application is treated as one system.
                             │
                             ▼
                  ┌──────────────────────┐
-                 │  NECTA RESULTS       │
+                 │        RESULTS       │
                  │       FINDER         │
                  └──────────┬───────────┘
                             │
@@ -2665,7 +2665,7 @@ The following practical activities will be performed during implementation.
 Activity 1 — Create Repository
 Create:
 
-necta-results-finder
+smart-results-finder
 Establish:
 
 README;
@@ -2686,7 +2686,7 @@ referential integrity.
 Activity 3 — Build Search UI
 Create the first working interface:
 
-NECTA RESULTS FINDER
+SMART RESULTS FINDER
 
 [ Examination ▼ ]
 
@@ -2769,7 +2769,7 @@ The following document should be maintained separately as the AI Development Con
 
 AI DEVELOPMENT CONTROL DOCUMENT
 Project Identity
-Project: NECTA Results Finder
+Project: SMART Results Finder
 
 Development Stage: MVP
 
@@ -2872,8 +2872,8 @@ Do not suppress exceptions merely to make the application appear functional.
 STANDARD AI CODING PROMPT
 Use the following as the base prompt for every coding session:
 
-NECTA RESULTS FINDER — AI DEVELOPMENT CONTEXT
-You are an AI software-development assistant working on the NECTA Results Finder MVP.
+SMART RESULTS FINDER — AI DEVELOPMENT CONTEXT
+You are an AI software-development assistant working on the Smart Results Finder MVP.
 
 PROJECT PURPOSE
 The system is an independent examination-results discovery platform designed to reduce the number of steps required for users to locate publicly accessible NECTA examination-result information.
@@ -3021,7 +3021,7 @@ Expected Output
 [Describe expected output]
 
 Constraints
-Follow the approved NECTA Results Finder architecture.
+Follow the approved SMART Results Finder architecture.
 
 Do not modify unrelated components.
 
@@ -3116,7 +3116,7 @@ Provide a regression test.
 Check whether the fix introduces security or architectural problems.
 
 5.24 AI Code Review Prompt
-CODE REVIEW TASK — NECTA RESULTS FINDER
+CODE REVIEW TASK — SMART RESULTS FINDER
 Review the supplied implementation against the approved project architecture.
 
 Check specifically for:

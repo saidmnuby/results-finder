@@ -37,7 +37,7 @@ description: Describe this is the features implementation prompt.
 
 ## Constraints
 
-- Follow the approved NECTA Results Finder architecture.
+- Follow the approved Smart Results Finder architecture.
 - Do not modify unrelated components.
 - Do not introduce arbitrary URL scraping.
 - Do not bypass external security mechanisms.

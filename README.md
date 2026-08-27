@@ -1,2 +1,2 @@
 # results-finder
-A web application project for smart examination results finder
+A web application project for fast, smart, secure examination results finder 

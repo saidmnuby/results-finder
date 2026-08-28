@@ -150,10 +150,11 @@ This document is the step-by-step implementation monitor for the SMART Results F
 - [x] SQLite metadata database initialized from migrations and seed data
 - [x] Region, district, and school routes connected to database queries
 - [x] Server-side admin bearer authentication and protected monitoring endpoint added
+- [x] Setup, API, and environment documentation added
 
 ### Next Step
-- Run full browser, integration, security, and parser test coverage.
-- Add production deployment configuration and final MVP documentation.
+- Run full browser, integration, security, and parser test coverage from the remote repository terminal.
+- Add production deployment configuration after test results are reviewed.
 
 ## 7. Notes
 

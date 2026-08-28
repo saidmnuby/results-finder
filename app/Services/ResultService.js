@@ -1,29 +1,40 @@
 (function (global) {
+  const target = global || globalThis;
+
   class ResultService {
     static async getSearchResult(payload) {
-      if (!payload || typeof payload !== 'object') {
+      try {
+        if (!payload || typeof payload !== 'object') {
+          return {
+            ok: false,
+            status: 'validation_error',
+            message: 'Invalid search payload.'
+          };
+        }
+
+        const sanitized = {
+          examination: String(payload.examination || '').trim().toUpperCase(),
+          year: String(payload.year || '').trim(),
+          indexNumber: String(payload.indexNumber || '').trim()
+        };
+
+        if (!sanitized.examination || !sanitized.year || !sanitized.indexNumber) {
+          return {
+            ok: false,
+            status: 'validation_error',
+            message: 'Examination, year, and index number are required.'
+          };
+        }
+
+        return target.SearchService.searchByIndex(sanitized);
+      } catch (error) {
+        console.error('[ResultService.getSearchResult]', error.message || error);
         return {
           ok: false,
-          status: 'validation_error',
-          message: 'Invalid search payload.'
+          status: 'request_error',
+          message: error.message || 'An error occurred during search.'
         };
       }
-
-      const sanitized = {
-        examination: String(payload.examination || '').trim().toUpperCase(),
-        year: String(payload.year || '').trim(),
-        indexNumber: String(payload.indexNumber || '').trim()
-      };
-
-      if (!sanitized.examination || !sanitized.year || !sanitized.indexNumber) {
-        return {
-          ok: false,
-          status: 'validation_error',
-          message: 'Examination, year, and index number are required.'
-        };
-      }
-
-      return global.SearchService.searchByIndex(sanitized);
     }
 
     static async getSchoolResult(payload) {
@@ -35,9 +46,9 @@
         school: String(payload?.school || '').trim()
       };
 
-      return global.SearchService.searchBySchool(sanitized);
+      return target.SearchService.searchBySchool(sanitized);
     }
   }
 
-  global.ResultService = ResultService;
-})(window);
+  target.ResultService = ResultService;
+})(globalThis);

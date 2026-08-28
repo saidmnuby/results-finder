@@ -1,15 +1,26 @@
+import { mkdir } from 'node:fs/promises';
+import { dirname } from 'node:path';
 import { readFile } from 'node:fs/promises';
 import { DatabaseSync } from 'node:sqlite';
 
-export class MetadataDatabase {
+class MetadataDatabase {
   constructor(databasePath, migrationPath, seedPath) {
     this.databasePath = databasePath;
     this.migrationPath = migrationPath;
     this.seedPath = seedPath;
-    this.database = new DatabaseSync(databasePath);
+    this.database = null;
+  }
+
+  async initializeDatabaseFile() {
+    await mkdir(dirname(this.databasePath), { recursive: true });
+    this.database = new DatabaseSync(this.databasePath);
   }
 
   async initialize() {
+    if (!this.database) {
+      await this.initializeDatabaseFile();
+    }
+
     this.database.exec('PRAGMA foreign_keys = ON;');
     this.database.exec(await readFile(this.migrationPath, 'utf8'));
     this.database.exec(await readFile(this.seedPath, 'utf8'));
@@ -66,3 +77,6 @@ export class MetadataDatabase {
     this.database.close();
   }
 }
+
+globalThis.MetadataDatabase = MetadataDatabase;
+export { MetadataDatabase };

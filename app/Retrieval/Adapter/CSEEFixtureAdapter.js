@@ -1,4 +1,6 @@
 (function (global) {
+  const target = global || globalThis;
+
   class CSEEFixtureAdapter {
     static retrieve(request) {
       const fixture = {
@@ -20,9 +22,9 @@
         throw new Error('No matching result was found in the approved demo fixture.');
       }
 
-      return global.CSEEParser.parse(JSON.stringify(fixture));
+      return target.CSEEParser.parse(JSON.stringify(fixture));
     }
   }
 
-  global.CSEEFixtureAdapter = CSEEFixtureAdapter;
-})(window);
+  target.CSEEFixtureAdapter = CSEEFixtureAdapter;
+})(globalThis);

@@ -4,12 +4,12 @@ import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Script, createContext } from 'node:vm';
 import { MetadataDatabase } from './app/Data/MetadataDatabase.js';
-import { AdminController } from './app/Controllers/AdminController.js';
 import { authorizeAdmin } from './app/Security/AdminAuth.js';
 
 const projectRoot = fileURLToPath(new URL('.', import.meta.url));
 const publicRoot = join(projectRoot, 'public');
 const port = Number(process.env.PORT || 3000);
+let AdminController = null;
 const database = new MetadataDatabase(
   join(projectRoot, 'storage', 'results-finder.sqlite'),
   join(projectRoot, 'database', 'migrations', '001_create_metadata_tables.sql'),
@@ -20,6 +20,7 @@ const applicationFiles = [
   'app/Services/SearchService.js',
   'app/Services/SchoolService.js',
   'app/Services/ResultService.js',
+  'app/Controllers/AdminController.js',
   'app/Retrieval/RequestController.js',
   'app/Retrieval/SourceResolver.js',
   'app/Retrieval/ResultValidator.js',
@@ -52,7 +53,22 @@ function resolvePublicPath(requestUrl) {
 }
 
 async function createApplicationContext() {
-  const context = { console, URL, setTimeout, clearTimeout, MetadataDatabase: database };
+  const context = {
+    console,
+    URL,
+    Date,
+    JSON,
+    Array,
+    Object,
+    Map,
+    String,
+    Number,
+    Boolean,
+    Error,
+    setTimeout,
+    clearTimeout,
+    MetadataDatabase: database
+  };
   context.window = context;
   createContext(context);
 
@@ -135,6 +151,7 @@ async function handleApiRequest(request, response, context) {
 
 await database.initialize();
 const applicationContext = await createApplicationContext();
+AdminController = applicationContext.AdminController;
 
 const server = createServer(async (request, response) => {
   if (request.url?.startsWith('/search/') || request.url?.startsWith('/locations/') || request.url?.startsWith('/admin/')) {

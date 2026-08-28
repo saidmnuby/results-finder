@@ -1,4 +1,6 @@
 (function (global) {
+  const target = global || globalThis;
+
   class Router {
     constructor() {
       this.routes = new Map();
@@ -8,7 +10,7 @@
       this.routes.set(method.toUpperCase() + ':' + path, handler);
     }
 
-    resolve(method, path, payload) {
+    async resolve(method, path, payload) {
       const key = method.toUpperCase() + ':' + path;
       const handler = this.routes.get(key);
 
@@ -20,37 +22,47 @@
         };
       }
 
-      return handler(payload);
+      try {
+        const result = await handler(payload);
+        return result;
+      } catch (error) {
+        console.error('[Router Error]', path, error.message || error);
+        return {
+          ok: false,
+          status: 'request_error',
+          message: error.message || 'An error occurred processing this request.'
+        };
+      }
     }
   }
 
   const router = new Router();
 
   router.register('POST', '/search/index', async function (payload) {
-    return global.ResultService.getSearchResult(payload);
+    return target.ResultService.getSearchResult(payload);
   });
 
   router.register('POST', '/search/school', async function (payload) {
-    return global.ResultService.getSchoolResult(payload);
+    return target.ResultService.getSchoolResult(payload);
   });
 
   router.register('GET', '/locations/regions', function () {
     return {
       ok: true,
-      data: global.MetadataDatabase
-        ? global.MetadataDatabase.getRegions()
-        : global.SearchService.getMockData().regions
+      data: target.MetadataDatabase
+        ? target.MetadataDatabase.getRegions()
+        : target.SearchService.getMockData().regions
     };
   });
 
   router.register('GET', '/locations/districts', function (payload) {
     const region = payload?.region || '';
 
-    if (global.MetadataDatabase) {
-      return { ok: true, data: global.MetadataDatabase.getDistricts(region) };
+    if (target.MetadataDatabase) {
+      return { ok: true, data: target.MetadataDatabase.getDistricts(region) };
     }
 
-    const result = global.SearchService.getMockData().regions.find(function (item) {
+    const result = target.SearchService.getMockData().regions.find(function (item) {
       return item.name === region;
     });
 
@@ -64,11 +76,11 @@
     const region = payload?.region || '';
     const district = payload?.district || '';
 
-    if (global.MetadataDatabase) {
-      return { ok: true, data: global.MetadataDatabase.getSchools(region, district) };
+    if (target.MetadataDatabase) {
+      return { ok: true, data: target.MetadataDatabase.getSchools(region, district) };
     }
 
-    const regions = global.SearchService.getMockData().regions;
+    const regions = target.SearchService.getMockData().regions;
     const selectedRegion = regions.find(function (item) {
       return item.name === region;
     });
@@ -87,5 +99,5 @@
     };
   });
 
-  global.ResultsFinderRouter = router;
-})(window);
+  target.ResultsFinderRouter = router;
+})(globalThis);

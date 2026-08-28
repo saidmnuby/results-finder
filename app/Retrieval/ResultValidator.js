@@ -1,4 +1,6 @@
 (function (global) {
+  const target = global || globalThis;
+
   class ResultValidator {
     static validate(result) {
       if (!result || typeof result !== 'object') {
@@ -19,5 +21,5 @@
     }
   }
 
-  global.ResultValidator = ResultValidator;
-})(window);
+  target.ResultValidator = ResultValidator;
+})(globalThis);

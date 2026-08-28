@@ -1,4 +1,6 @@
 (function (global) {
+  const target = global || globalThis;
+
   class RateLimiter {
     constructor(limitPerMinute = 20) {
       this.limitPerMinute = limitPerMinute;
@@ -20,5 +22,5 @@
     }
   }
 
-  global.RateLimiter = RateLimiter;
-})(window);
+  target.RateLimiter = RateLimiter;
+})(globalThis);

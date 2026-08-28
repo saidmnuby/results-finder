@@ -1,4 +1,6 @@
 (function (global) {
+  const target = global || globalThis;
+
   class SourceResolver {
     static resolve({ examination, year, searchType }) {
       const configMap = {
@@ -35,5 +37,5 @@
     }
   }
 
-  global.SourceResolver = SourceResolver;
-})(window);
+  target.SourceResolver = SourceResolver;
+})(globalThis);

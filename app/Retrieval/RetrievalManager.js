@@ -1,26 +1,28 @@
 (function (global) {
+  const target = global || globalThis;
+
   class RetrievalManager {
     constructor() {
-      this.rateLimiter = new global.RateLimiter(20);
+      this.rateLimiter = new target.RateLimiter(20);
     }
 
     async retrieve(payload) {
-      const request = global.RequestController.validate(payload);
+      const request = target.RequestController.validate(payload);
 
       if (!this.rateLimiter.check(`${request.examination}:${request.year}`)) {
         throw new Error('Too many requests. Please try again later.');
       }
 
-      const source = global.SourceResolver.resolve(request);
+      const source = target.SourceResolver.resolve(request);
 
       if (source.demoAdapter !== 'CSEEFixtureAdapter') {
         throw new Error('The requested approved source is not available in this MVP build.');
       }
 
-      const normalized = global.CSEEFixtureAdapter.retrieve(request);
-      return global.ResultValidator.validate(normalized);
+      const normalized = target.CSEEFixtureAdapter.retrieve(request);
+      return target.ResultValidator.validate(normalized);
     }
   }
 
-  global.RetrievalManager = RetrievalManager;
-})(window);
+  target.RetrievalManager = RetrievalManager;
+})(globalThis);

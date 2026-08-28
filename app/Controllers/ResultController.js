@@ -1,11 +1,15 @@
-import { SearchService } from '../Services/SearchService.js';
+(function (global) {
+  const target = global || globalThis;
 
-export class ResultController {
-  static async getResultByIndex(payload) {
-    return SearchService.searchByIndex(payload);
+  class ResultController {
+    static async getResultByIndex(payload) {
+      return target.SearchService.searchByIndex(payload);
+    }
+
+    static async getSchoolResult(payload) {
+      return target.SearchService.searchBySchool(payload);
+    }
   }
 
-  static async getSchoolResult(payload) {
-    return SearchService.searchBySchool(payload);
-  }
-}
+  target.ResultController = ResultController;
+})(globalThis);

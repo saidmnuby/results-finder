@@ -1,4 +1,6 @@
 (function (global) {
+  const target = global || globalThis;
+
   class SearchService {
     static getMockData() {
       return {
@@ -75,7 +77,7 @@
     }
 
     static async searchByIndex({ examination, year, indexNumber }) {
-      const validation = global.InputValidator.validateIndexNumber(indexNumber);
+      const validation = target.InputValidator.validateIndexNumber(indexNumber);
 
       if (!validation.valid) {
         return {
@@ -86,7 +88,7 @@
       }
 
       try {
-        const result = await new global.RetrievalManager().retrieve({
+        const result = await new target.RetrievalManager().retrieve({
           examination,
           year,
           indexNumber: validation.value
@@ -132,5 +134,5 @@
     }
   }
 
-  global.SearchService = SearchService;
-})(window);
+  target.SearchService = SearchService;
+})(globalThis);

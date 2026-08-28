@@ -1,4 +1,6 @@
 (function (global) {
+  const target = global || globalThis;
+
   class RequestController {
     static validate(payload) {
       const examination = String(payload?.examination || '').trim().toUpperCase();
@@ -26,5 +28,5 @@
     }
   }
 
-  global.RequestController = RequestController;
-})(window);
+  target.RequestController = RequestController;
+})(globalThis);

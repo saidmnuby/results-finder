@@ -1,3 +1,5 @@
+import '../app/Retrieval/Parser/CSEEParser.js';
+
 (function () {
   const assert = (condition, message) => {
     if (!condition) {
@@ -5,7 +7,7 @@
     }
   };
 
-  const root = typeof window !== 'undefined' ? window : globalThis;
+  const root = globalThis;
   const fixture = JSON.stringify({
     examination: 'CSEE',
     year: '2025',

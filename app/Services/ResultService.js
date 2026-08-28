@@ -1,4 +1,6 @@
 (function (global) {
+  const target = global || globalThis;
+
   class ResultService {
     static async getSearchResult(payload) {
       if (!payload || typeof payload !== 'object') {
@@ -23,7 +25,7 @@
         };
       }
 
-      return global.SearchService.searchByIndex(sanitized);
+      return target.SearchService.searchByIndex(sanitized);
     }
 
     static async getSchoolResult(payload) {
@@ -35,9 +37,9 @@
         school: String(payload?.school || '').trim()
       };
 
-      return global.SearchService.searchBySchool(sanitized);
+      return target.SearchService.searchBySchool(sanitized);
     }
   }
 
-  global.ResultService = ResultService;
-})(window);
+  target.ResultService = ResultService;
+})(globalThis);

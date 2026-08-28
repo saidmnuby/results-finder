@@ -1,3 +1,12 @@
+import '../app/Security/InputValidator.js';
+import '../app/Retrieval/RequestController.js';
+import '../app/Retrieval/RateLimiter.js';
+import '../app/Retrieval/SourceResolver.js';
+import '../app/Retrieval/Parser/CSEEParser.js';
+import '../app/Retrieval/Adapter/CSEEFixtureAdapter.js';
+import '../app/Retrieval/ResultValidator.js';
+import '../app/Retrieval/RetrievalManager.js';
+
 (async function () {
   const assert = (condition, message) => {
     if (!condition) {
@@ -5,7 +14,7 @@
     }
   };
 
-  const root = typeof window !== 'undefined' ? window : globalThis;
+  const root = globalThis;
 
   if (!root.InputValidator || !root.RequestController || !root.RetrievalManager || !root.CSEEFixtureAdapter) {
     throw new Error('Browser-safe globals are not available for validation tests.');

@@ -1,4 +1,6 @@
 (function (global) {
+  const target = global || globalThis;
+
   class CSEEParser {
     static parse(responseText) {
       let payload;
@@ -26,5 +28,5 @@
     }
   }
 
-  global.CSEEParser = CSEEParser;
-})(window);
+  target.CSEEParser = CSEEParser;
+})(globalThis);

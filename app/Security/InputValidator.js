@@ -1,4 +1,6 @@
 (function (global) {
+  const target = global || globalThis;
+
   class InputValidator {
     static normalizeIndex(value) {
       return String(value || '').trim();
@@ -34,5 +36,5 @@
     }
   }
 
-  global.InputValidator = InputValidator;
-})(window);
+  target.InputValidator = InputValidator;
+})(globalThis);

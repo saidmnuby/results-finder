@@ -35,6 +35,25 @@
           message: error.message || 'An error occurred during search.'
         };
       }
+<<<<<<< HEAD
+=======
+
+      const sanitized = {
+        examination: String(payload.examination || '').trim().toUpperCase(),
+        year: String(payload.year || '').trim(),
+        indexNumber: String(payload.indexNumber || '').trim()
+      };
+
+      if (!sanitized.examination || !sanitized.year || !sanitized.indexNumber) {
+        return {
+          ok: false,
+          status: 'validation_error',
+          message: 'Examination, year, and index number are required.'
+        };
+      }
+
+      return target.SearchService.searchByIndex(sanitized);
+>>>>>>> a5d18248200032429062937f28d1796677731009
     }
 
     static async getSchoolResult(payload) {

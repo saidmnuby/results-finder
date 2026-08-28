@@ -1,3 +1,5 @@
+
+//This function is used to handle school-related operations such as searching for schools, getting regions, districts, and schools. It uses the SchoolService to perform these operations and returns the results.
 (function (global) {
   const target = global || globalThis;
 

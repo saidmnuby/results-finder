@@ -1,3 +1,4 @@
+//This function is used to handle search operations for index numbers. It validates the input index number and then uses the SearchService to perform the search based on the provided examination, year, and index number. It returns the search results or an error message if the validation fails.
 (function (global) {
   const target = global || globalThis;
 

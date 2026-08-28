@@ -32,9 +32,11 @@ INSERT OR IGNORE INTO source_configs (examination_id, year_id, source_type, sour
 SELECT examinations.id, examination_years.id, 'public_html', 'necta_csee_2025', 'v1.0.0', 'active', '2026-08-28T00:00:00Z'
 FROM examinations JOIN examination_years ON examination_years.examination_id = examinations.id
 WHERE examinations.code = 'CSEE' AND examination_years.year = '2025'
+
 UNION ALL SELECT examinations.id, examination_years.id, 'public_html', 'necta_csee_2024', 'v1.0.0', 'active', '2026-08-28T00:00:00Z'
 FROM examinations JOIN examination_years ON examination_years.examination_id = examinations.id
 WHERE examinations.code = 'CSEE' AND examination_years.year = '2024'
+
 UNION ALL SELECT examinations.id, examination_years.id, 'public_html', 'necta_psle_2025', 'v1.0.0', 'active', '2026-08-28T00:00:00Z'
 FROM examinations JOIN examination_years ON examination_years.examination_id = examinations.id
 WHERE examinations.code = 'PSLE' AND examination_years.year = '2025';

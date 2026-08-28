@@ -35,8 +35,6 @@
           message: error.message || 'An error occurred during search.'
         };
       }
-<<<<<<< HEAD
-=======
 
       const sanitized = {
         examination: String(payload.examination || '').trim().toUpperCase(),
@@ -53,7 +51,6 @@
       }
 
       return target.SearchService.searchByIndex(sanitized);
->>>>>>> a5d18248200032429062937f28d1796677731009
     }
 
     static async getSchoolResult(payload) {

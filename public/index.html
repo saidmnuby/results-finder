@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Results Finder</title>
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container">
+        <h1>Smart Results Finder</h1>
+        <p>Fast and secure result discovery for supported public examination sources.</p>
+      </div>
+    </header>
+
+    <main class="container layout">
+      <section class="panel">
+        <h2>Search by Index Number</h2>
+        <form id="index-form" novalidate>
+          <div class="field-group">
+            <label for="exam-index">Examination</label>
+            <select id="exam-index" name="examination">
+              <option value="CSEE">CSEE</option>
+              <option value="ACSEE">ACSEE</option>
+              <option value="PSLE">PSLE</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="year-index">Year</label>
+            <select id="year-index" name="year">
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="index-number">Index Number</label>
+            <input
+              id="index-number"
+              name="indexNumber"
+              type="text"
+              placeholder="S1673/3472 or PS170604-001"
+              aria-label="Index number"
+            />
+          </div>
+
+          <button type="submit">Search Result</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>Search by School</h2>
+        <form id="school-form" novalidate>
+          <div class="field-group">
+            <label for="exam-school">Examination</label>
+            <select id="exam-school" name="examination">
+              <option value="CSEE">CSEE</option>
+              <option value="ACSEE">ACSEE</option>
+              <option value="PSLE">PSLE</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="year-school">Year</label>
+            <select id="year-school" name="year">
+              <option value="2025">2025</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="region-select">Region</label>
+            <select id="region-select" name="region">
+              <option value="">Select region</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="district-select">District</label>
+            <select id="district-select" name="district" disabled>
+              <option value="">Select district</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="school-select">School</label>
+            <select id="school-select" name="school" disabled>
+              <option value="">Select school</option>
+            </select>
+          </div>
+
+          <button type="submit">Find by School</button>
+        </form>
+      </section>
+    </main>
+
+    <section class="container">
+      <div id="status-box" class="status-box" aria-live="polite"></div>
+      <div id="result-box" class="result-box" aria-live="polite"></div>
+    </section>
+
+    <script src="../app/Security/InputValidator.js"></script>
+    <script src="../app/Services/SearchService.js"></script>
+    <script src="../app/Services/SchoolService.js"></script>
+    <script src="../app/Services/ResultService.js"></script>
+    <script src="../app/Security/RateLimiter.js"></script>
+    <script src="../app/Security/Sanitizer.js"></script>
+    <script src="../app/Security/Authorization.js"></script>
+    <script src="../app/Retrieval/RequestController.js"></script>
+    <script src="../app/Retrieval/SourceResolver.js"></script>
+    <script src="../app/Retrieval/ResultValidator.js"></script>
+    <script src="../app/Retrieval/RateLimiter.js"></script>
+    <script src="../app/Retrieval/Parser/CSEEParser.js"></script>
+    <script src="../app/Retrieval/Adapter/CSEEFixtureAdapter.js"></script>
+    <script src="../app/Retrieval/RetrievalManager.js"></script>
+    <script src="../app/Routes/router.js"></script>
+    <script src="./assets/js/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Results Finder Admin</title>
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container">
+        <h1>Results Finder Admin</h1>
+        <p>Operational monitoring and source status view for the MVP.</p>
+      </div>
+    </header>
+
+    <main class="container layout">
+      <section class="panel">
+        <h2>System Health</h2>
+        <div id="admin-status" class="status-box visible info">Loading dashboard…</div>
+      </section>
+
+      <section class="panel">
+        <h2>Source Status</h2>
+        <div id="source-list" class="result-box"></div>
+      </section>
+    </main>
+
+    <script src="../app/Security/Sanitizer.js"></script>
+    <script src="../app/Services/AdminService.js"></script>
+    <script src="./assets/js/admin.js"></script>
+  </body>
+</html>

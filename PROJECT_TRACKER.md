@@ -135,7 +135,8 @@ This document is the step-by-step implementation monitor for the SMART Results F
 
 ### Current Status
 - [x] Start: baseline architecture confirmed
-- [x] In progress: project setup and structure alignment
+- [x] Project setup and structure alignment
+- [x] Node.js backend foundation and local static server added
 - [x] Initial MVP foundation created
 - [x] Search UI and validation flow created
 - [x] School navigation flow created
@@ -145,11 +146,14 @@ This document is the step-by-step implementation monitor for the SMART Results F
 - [x] CSEE fixture adapter and parser regression coverage added
 - [x] Demo responses labeled and dynamic result rendering sanitized
 - [x] Client-side admin authorization removed
+- [x] Node.js server connected to application routes and services
+- [x] SQLite metadata database initialized from migrations and seed data
+- [x] Region, district, and school routes connected to database queries
+- [x] Server-side admin bearer authentication and protected monitoring endpoint added
 
 ### Next Step
-- Add server-side admin authentication and protected monitoring endpoints.
-- Replace the demo adapter with a legally approved live-source adapter after source verification.
-- Run browser and parser tests when a JavaScript runtime is available.
+- Run full browser, integration, security, and parser test coverage.
+- Add production deployment configuration and final MVP documentation.
 
 ## 7. Notes
 

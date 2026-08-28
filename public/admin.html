@@ -16,6 +16,17 @@
 
     <main class="container layout">
       <section class="panel">
+        <h2>Administrator Access</h2>
+        <form id="admin-form" novalidate>
+          <div class="field-group">
+            <label for="admin-token">Access token</label>
+            <input id="admin-token" type="password" autocomplete="off" required />
+          </div>
+          <button type="submit">Load Monitoring</button>
+        </form>
+      </section>
+
+      <section class="panel">
         <h2>System Health</h2>
         <div id="admin-status" class="status-box visible info">Loading dashboard…</div>
       </section>

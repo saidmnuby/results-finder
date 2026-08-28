@@ -34,6 +34,20 @@
     resultBox.innerHTML = '';
   }
 
+  async function requestRoute(method, path, payload) {
+    const response = await fetch(path, {
+      method,
+      headers: { 'content-type': 'application/json' },
+      body: method === 'GET' ? undefined : JSON.stringify(payload || {})
+    });
+
+    if (!response.ok) {
+      throw new Error('The application could not process this request.');
+    }
+
+    return response.json();
+  }
+
   async function handleIndexSearch(event) {
     event.preventDefault();
     clearResult();
@@ -46,7 +60,7 @@
       indexNumber: formData.get('indexNumber')
     };
 
-    const response = await window.ResultsFinderRouter.resolve('POST', '/search/index', payload);
+    const response = await requestRoute('POST', '/search/index', payload);
 
     if (!response.ok) {
       showStatus('error', response.message);
@@ -64,7 +78,7 @@
     const form = event.currentTarget;
     const formData = new FormData(form);
 
-    const response = await window.ResultsFinderRouter.resolve('POST', '/search/school', {
+    const response = await requestRoute('POST', '/search/school', {
       examination: formData.get('examination'),
       year: formData.get('year'),
       region: formData.get('region'),
@@ -90,34 +104,33 @@
   }
 
   function populateRegions() {
-    const regions = window.SearchService.getMockData().regions;
-    regionSelect.innerHTML = '<option value="">Select region</option>';
-
-    regions.forEach(function (region) {
-      const option = document.createElement('option');
-      option.value = region.name;
-      option.textContent = region.name;
-      regionSelect.appendChild(option);
+    requestRoute('GET', '/locations/regions').then(function (response) {
+      regionSelect.innerHTML = '<option value="">Select region</option>';
+      response.data.forEach(function (region) {
+        const option = document.createElement('option');
+        option.value = region.name;
+        option.textContent = region.name;
+        regionSelect.appendChild(option);
+      });
+    }).catch(function () {
+      showStatus('error', 'Locations are temporarily unavailable.');
     });
   }
 
-  function onRegionChange() {
+  async function onRegionChange() {
     const selectedRegionName = regionSelect.value;
-    const regions = window.SearchService.getMockData().regions;
-    const selectedRegion = regions.find(function (region) {
-      return region.name === selectedRegionName;
-    });
 
     districtSelect.innerHTML = '<option value="">Select district</option>';
     schoolSelect.innerHTML = '<option value="">Select school</option>';
     districtSelect.disabled = true;
     schoolSelect.disabled = true;
 
-    if (!selectedRegion) {
+    if (!selectedRegionName) {
       return;
     }
 
-    selectedRegion.districts.forEach(function (district) {
+    const response = await requestRoute('GET', '/locations/districts?region=' + encodeURIComponent(selectedRegionName));
+    response.data.forEach(function (district) {
       const option = document.createElement('option');
       option.value = district.name;
       option.textContent = district.name;
@@ -127,30 +140,19 @@
     districtSelect.disabled = false;
   }
 
-  function onDistrictChange() {
+  async function onDistrictChange() {
     const selectedRegionName = regionSelect.value;
     const selectedDistrictName = districtSelect.value;
-    const regions = window.SearchService.getMockData().regions;
-    const selectedRegion = regions.find(function (region) {
-      return region.name === selectedRegionName;
-    });
 
     schoolSelect.innerHTML = '<option value="">Select school</option>';
     schoolSelect.disabled = true;
 
-    if (!selectedRegion) {
+    if (!selectedRegionName || !selectedDistrictName) {
       return;
     }
 
-    const selectedDistrict = selectedRegion.districts.find(function (district) {
-      return district.name === selectedDistrictName;
-    });
-
-    if (!selectedDistrict) {
-      return;
-    }
-
-    selectedDistrict.schools.forEach(function (school) {
+    const response = await requestRoute('GET', '/locations/schools?region=' + encodeURIComponent(selectedRegionName) + '&district=' + encodeURIComponent(selectedDistrictName));
+    response.data.forEach(function (school) {
       const option = document.createElement('option');
       option.value = school.name;
       option.textContent = school.name;

@@ -37,12 +37,19 @@
   router.register('GET', '/locations/regions', function () {
     return {
       ok: true,
-      data: global.SearchService.getMockData().regions
+      data: global.MetadataDatabase
+        ? global.MetadataDatabase.getRegions()
+        : global.SearchService.getMockData().regions
     };
   });
 
   router.register('GET', '/locations/districts', function (payload) {
     const region = payload?.region || '';
+
+    if (global.MetadataDatabase) {
+      return { ok: true, data: global.MetadataDatabase.getDistricts(region) };
+    }
+
     const result = global.SearchService.getMockData().regions.find(function (item) {
       return item.name === region;
     });
@@ -56,6 +63,11 @@
   router.register('GET', '/locations/schools', function (payload) {
     const region = payload?.region || '';
     const district = payload?.district || '';
+
+    if (global.MetadataDatabase) {
+      return { ok: true, data: global.MetadataDatabase.getSchools(region, district) };
+    }
+
     const regions = global.SearchService.getMockData().regions;
     const selectedRegion = regions.find(function (item) {
       return item.name === region;

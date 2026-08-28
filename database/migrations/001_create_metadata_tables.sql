@@ -12,7 +12,8 @@ CREATE TABLE IF NOT EXISTS examination_years (
   year TEXT NOT NULL,
   status TEXT NOT NULL DEFAULT 'active',
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (examination_id) REFERENCES examinations(id)
+  FOREIGN KEY (examination_id) REFERENCES examinations(id),
+  UNIQUE (examination_id, year)
 );
 
 CREATE TABLE IF NOT EXISTS regions (
@@ -28,7 +29,8 @@ CREATE TABLE IF NOT EXISTS districts (
   name TEXT NOT NULL,
   code TEXT NOT NULL,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (region_id) REFERENCES regions(id)
+  FOREIGN KEY (region_id) REFERENCES regions(id),
+  UNIQUE (region_id, code)
 );
 
 CREATE TABLE IF NOT EXISTS schools (
@@ -38,7 +40,8 @@ CREATE TABLE IF NOT EXISTS schools (
   centre_code TEXT,
   status TEXT NOT NULL DEFAULT 'active',
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (district_id) REFERENCES districts(id)
+  FOREIGN KEY (district_id) REFERENCES districts(id),
+  UNIQUE (district_id, centre_code)
 );
 
 CREATE TABLE IF NOT EXISTS source_configs (

@@ -19,3 +19,8 @@
 /fuel/app/logs/*/*/*
 /fuel/app/cache/*/*
 /fuel/app/config/crypt.php
+
+# local MVP database
+/storage/*.sqlite
+/storage/*.sqlite-shm
+/storage/*.sqlite-wal
